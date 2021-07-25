@@ -37,4 +37,12 @@ return [
         ]
     ],
 
+    'accuweather' => [
+        'key' => env('ACCUWEATHER_KEY')
+    ],
+
+    'tomtom' => [
+        'key' => env('TOMTOM_KEY')
+    ],
+
 ];

@@ -32,6 +32,8 @@
             </div>
 
             <div class="mt-8 md:mt-0 flex items-center">
+                <a href="/weather" class="text-xs font-bold uppercase mr-5">Weather</a>
+                <a href="/traffic" class="text-xs font-bold uppercase mr-5">Traffic</a>
                 @auth
                     <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}!</span>
 

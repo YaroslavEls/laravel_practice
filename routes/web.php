@@ -9,6 +9,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\WeatherController;
+use App\Http\Controllers\TrafficController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +51,9 @@ Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store
 
 Route::post('newsletter', NewsletterController::class);
 
-Route::get('test', function () {
-    return view('test');
-});
+//
+
+Route::get('weather', [WeatherController::class, 'create']);
+Route::post('weather', [WeatherController::class, 'show']);
+
+Route::get('traffic', [TrafficController::class, 'create']);
