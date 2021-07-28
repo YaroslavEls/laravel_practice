@@ -31,14 +31,12 @@ class WeatherController extends Controller
 
         $info = getInfo('http://dataservice.accuweather.com//locations/v1/cities/search?apikey='.config('services.accuweather.key').'&q='.request()->city);
         $cityKey = $info[0]['Key'];
-        $info = getInfo('http://dataservice.accuweather.com/forecasts/v1/daily/1day/'.$cityKey.'?apikey='.config('services.accuweather.key'));
+        $info = getInfo('http://dataservice.accuweather.com/currentconditions/v1/'.$cityKey.'?apikey='.config('services.accuweather.key'));
 
         $data = (object) [
-            'date' => $info['DailyForecasts'][0]['Date'],
             'city' => ucfirst( request()->city ),
-            'min' => round( ( $info['DailyForecasts'][0]['Temperature']['Minimum']['Value'] - 32 ) * 5/9 ),
-            'max' => round( ( $info['DailyForecasts'][0]['Temperature']['Maximum']['Value'] - 32 ) * 5/9 ),
-            'status' => $info['DailyForecasts'][0]['Day']['IconPhrase']
+            'temperature' => $info[0]['Temperature']['Metric']['Value'],
+            'status' => $info[0]['WeatherText']
         ];
 
         return view('weather-show', [
