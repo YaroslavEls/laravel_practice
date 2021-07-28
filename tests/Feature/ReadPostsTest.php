@@ -30,7 +30,7 @@ class ReadPostsTest extends TestCase
     /** @test */
     public function a_user_can_view_a_single_post()
     {
-        $response = $this->get('/posts/' .$this->post->slug);
+        $response = $this->get('posts/' .$this->post->slug);
         $response->assertSee($this->post->title);
     }
 
@@ -39,7 +39,7 @@ class ReadPostsTest extends TestCase
     {
         $comment = Comment::factory()->create(['post_id' => $this->post->id]);
 
-        $response = $this->get('/posts/' . $this->post->slug);
+        $response = $this->get('posts/' . $this->post->slug);
         $response->assertSee($comment->body);
     }
 }
