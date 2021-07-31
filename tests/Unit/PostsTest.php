@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 // use PHPUnit\Framework\TestCase;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Tests\TestCase;
@@ -32,5 +33,11 @@ class PostsTest extends TestCase
     function a_post_has_an_author()
     {
         $this->assertInstanceOf(User::class, $this->post->author);
+    }
+
+    /** @test */
+    function a_post_belongs_to_the_category()
+    {
+        $this->assertInstanceOf(Category::class, $this->post->category);
     }
 }

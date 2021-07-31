@@ -1,4 +1,3 @@
-
 @props(['comment'])
 
 <x-panel class="bg-gray-50">
@@ -22,4 +21,18 @@
             </p>
         </div>
     </article>
+
+    <hr class="mt-5">
+
+    <form class="mt-5" method="POST" action="/comments/{{ $comment->id }}/favorites">
+        @csrf
+
+        <button
+            type="submit"
+            class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600"
+            {{ $comment->isFavorited() ? 'disabled' : '' }}>
+
+            {{ $comment->favorites_count }} {{ Str::plural('Favorite', $comment->favorites_count) }}
+        </button>
+    </form>
 </x-panel>

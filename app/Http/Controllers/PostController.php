@@ -11,7 +11,7 @@ class PostController extends Controller
     {
         return view('posts.index', [
             'posts' => Post::latest()->filter(
-                request(['search', 'category', 'author'])
+                request(['search', 'category', 'author', 'popular'])
             )->paginate(9)->withQueryString()
         ]);
     }
@@ -19,7 +19,8 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return view('posts.show', [
-            'post' => $post
+            'post' => $post,
+            'comments' => $post->comments()->paginate(10)
         ]);
     }
 
@@ -32,7 +33,7 @@ class PostController extends Controller
     {
         $attributes = request()->validate([
             'title' => 'required',
-            'thumbnail' => ['required', 'image'],
+            'thumbnail' => ['required'], //required, image
             'slug' => ['required', Rule::unique('posts', 'slug')],
             'excerpt' => 'required',
             'body' => 'required',
@@ -40,11 +41,11 @@ class PostController extends Controller
         ]);
 
         $attributes['user_id'] = auth()->id();
-        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+//        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
 
         Post::create($attributes);
 
-        return redirect('/');
+        return redirect('posts/'.$attributes['slug']);
     }
 
 }

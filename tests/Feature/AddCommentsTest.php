@@ -15,7 +15,7 @@ class AddCommentsTest extends TestCase
     public function an_unauthenticated_users_may_not_leave_comments()
     {
         $post = Post::factory()->create();
-        $comment = Comment::factory()->create();
+        $comment = Comment::factory()->make();
 
         $this->post('posts/'.$post->slug.'/comments', $comment->toArray());
 
@@ -28,10 +28,32 @@ class AddCommentsTest extends TestCase
         $this->signIn();
 
         $post = Post::factory()->create();
-        $comment = Comment::factory()->create();
+        $comment = Comment::factory()->make();
 
         $this->post('posts/'.$post->slug.'/comments', $comment->toArray());
 
         $this->get('posts/'.$post->slug)->assertSee($comment->body);
+    }
+
+    /**
+     * @test
+     * @dataProvider requiredFormValidationProvider
+     */
+    public function comment_validates_form($formInput, $formInputValue)
+    {
+        $this->signIn();
+
+        $post = Post::factory()->create();
+        $comment = Comment::factory()->make([$formInput => $formInputValue]);
+
+        $this->post('posts/'.$post->slug.'/comments', $comment->toArray())->assertSessionHasErrors($formInput);;
+
+    }
+
+    public function requiredFormValidationProvider()
+    {
+        return [
+            ['body', '']
+        ];
     }
 }

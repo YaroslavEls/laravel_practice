@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
+    use Favoritable;
+
+    protected $with = ['author', 'favorites'];
 
     public function post()
     {
@@ -18,4 +21,5 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
 }

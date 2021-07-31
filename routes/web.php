@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\Category;
-use App\Models\Post;
-use App\Models\User;
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
@@ -26,20 +24,6 @@ use App\Http\Controllers\TrafficController;
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
-//Route::get('categories/{category:slug}', function (Category $category) {
-//    return view('posts', [
-//        'posts' => $category->posts,
-//        'currentCategory' => $category,
-//        'categories' => Category::all()
-//    ]);
-//})->name('category');
-
-//Route::get('authors/{author:username}', function (User $author) {
-//    return view('posts.index', [
-//        'posts' => $author->posts,
-//    ]);
-//});
-
 Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
 
@@ -54,11 +38,12 @@ Route::post('newsletter', NewsletterController::class);
 //
 
 Route::get('weather', [WeatherController::class, 'create']);
-Route::post('weather', [WeatherController::class, 'show']);
 
 Route::get('traffic', [TrafficController::class, 'create']);
 
-Route::get('admin/posts/create', [PostController::class, 'create'])->middleware('admin');
-Route::post('admin/posts', [PostController::class, 'store'])->middleware('admin');
+Route::get('admin/posts/create', [PostController::class, 'create'])->middleware('auth');
+Route::post('admin/posts', [PostController::class, 'store'])->middleware('auth');
 
 // Route::resource();
+
+Route::post('/comments/{comment}/favorites', [FavoriteController::class, 'store']);

@@ -17,6 +17,9 @@
                             </h5>
                         </div>
                     </div>
+                    <p class="mt-5">
+                        {{ $post->comments_count }} {{ Str::plural('comment', $post->comments_count) }}
+                    </p>
                 </div>
 
                 <div class="col-span-8">
@@ -51,9 +54,12 @@
                 <section class="col-span-8 col-start-5 mt-10 space-y-6">
                     @include ('posts._add-comment-form')
 
-                    @foreach ($post->comments as $comment)
+                    @foreach ($comments as $comment)
                         <x-post-comment :comment="$comment"/>
                     @endforeach
+
+                    {{ $comments->links() }}
+
                 </section>
             </article>
         </main>

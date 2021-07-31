@@ -13,6 +13,15 @@ class Post extends Model
 
     protected $with = ['category', 'author'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('comments_count', function ($builder) {
+            $builder->withCount('comments');
+        });
+    }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? false, fn($query, $search) =>
@@ -32,6 +41,10 @@ class Post extends Model
             $query->whereHas('author', fn ($query) =>
                 $query->where('username', $author)
             )
+        );
+
+        $query->when($filters['popular'] ?? false, fn($query, $post) =>
+            dd($post)
         );
     }
 

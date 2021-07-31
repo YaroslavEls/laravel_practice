@@ -23,6 +23,10 @@
                     <span class="mt-2 block text-gray-400 text-xs">
                         Published <time>{{ $post->created_at->diffForHumans() }}</time>
                     </span>
+
+                    <p class="text-xs mt-1 text-gray-500">
+                        {{ $post->comments_count }} {{ Str::plural('comment', $post->comments_count) }}
+                    </p>
                 </div>
             </header>
 

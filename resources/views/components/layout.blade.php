@@ -40,6 +40,7 @@
                     <form method="POST" action="/logout" class="text-xs font-semibold text-blue-500 ml-6">
                         @csrf
 
+                        <a href="/admin/posts/create" class="text-xs font-bold uppercase mr-5">Create a post</a>
                         <button type="submit">Log Out</button>
                     </form>
                 @else
